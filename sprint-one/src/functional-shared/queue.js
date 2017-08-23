@@ -15,7 +15,19 @@ var queueMethods = {
     this.count++;
   },
   dequeue: function () {
-    this.count--;
+    var storage = this.storage;
+    if (this.count > 0) {
+      var previous = storage[0];
+      this.count--;
+      for (var key in storage) {
+        if (key === this.count) {
+          delete storage[key];
+        } else {
+          storage[key] = storage[parseInt(key) + 1];
+        }
+      }
+      return previous;
+    }
     
   },
   size: function () {
