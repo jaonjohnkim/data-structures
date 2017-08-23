@@ -11,7 +11,7 @@ var Queue = function() {
 
 var queueMethods = {
   enqueue: function (value) {
-    // body...
+    this.count++;
   },
   dequeue: function () {
     // body...
