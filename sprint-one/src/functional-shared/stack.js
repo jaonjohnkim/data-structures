@@ -20,7 +20,9 @@ var stackMethods = {
     this.count++;
   },
   pop: function () {
-    // this.
+    this.count--;
+    var previous = this.storage[this.count];
+    return previous;
   },
   size: function () {
     return this.count;
