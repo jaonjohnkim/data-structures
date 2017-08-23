@@ -15,7 +15,8 @@ var queueMethods = {
     this.count++;
   },
   dequeue: function () {
-    // body...
+    this.count--;
+    
   },
   size: function () {
     return this.count;
