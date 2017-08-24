@@ -23,6 +23,7 @@ var queueMethods = {
           this.storage[key] = this.storage[parseInt(key) + 1];
         }
       }
+      return previous;
     }
   },
   size: function () {
