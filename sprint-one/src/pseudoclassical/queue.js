@@ -13,6 +13,18 @@ Queue.prototype.enqueue = function (value) {
 };
 
 Queue.prototype.dequeue = function () {
+  if (this.count > 0) {
+    var previous = this.storage[0];
+    this.count--;
+    for (var key in this.storage) {
+      if (key === this.count) {
+        delete this.storage[key];
+      } else {
+        this.storage[key] = this.storage[parseInt(key) + 1];
+      }
+    }
+    return previous;
+  }
   
 };
 
