@@ -7,8 +7,9 @@ var Queue = function() {
   
 };
 
-Queue.prototype.enqueue = function () {
-  
+Queue.prototype.enqueue = function (value) {
+  this.storage[this.count] = value;
+  this.count++;
 };
 
 Queue.prototype.dequeue = function () {
