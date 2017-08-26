@@ -3,6 +3,17 @@ var LinkedList = function() {
   list.head = null;
   list.tail = null;
 
+  list.addHead = function(value) {
+    var newNode = Node(value);
+    if (this.head) {
+      var oldHead = this.head;
+      this.head = newNode;
+      newNode.next = oldHead;
+    } else {
+      this.head = newNode;
+    }    
+  };
+
   list.addToTail = function(value) {
     var newNode = Node(value);
     if (this.tail !== null) {
@@ -25,25 +36,76 @@ var LinkedList = function() {
     return previousHead.value;
   };
 
+  list.removeNode = function(target) {
+    var context = this;
+    if (this.head.value === target) {
+      return this.removeHead();
+    }
+    var recurseThroughListSavePrevious = function (node) {
+      if (node.next !== null) {
+        if (node.next.next === null) {
+          var oldTail = node.next;
+          context.tail = node;
+          context.tail.next = null;
+          return oldTail.value;
+        } else if (node.next.value === target) {
+          var oldValue = node.next.value;
+          var newReferenceNode = node.next.next;
+          node.next.next = null;
+          node.next = newReferenceNode;
+          return oldValue;
+        } else {
+          return recurseThroughListSavePrevious(node.next);
+        }
+      }
+      return undefined;
+    };
+    return recurseThroughListSavePrevious(this.head);
+  };
+
+  list.removeTail = function(prevNode) {
+    if (prevNode === undefined) {
+      return this.removeNode(this.tail);
+    }
+    console.log(prevNode);
+    var oldTail = this.tail;
+    this.tail = prevNode.value;
+    this.tail.next = null;
+    return oldTail.value;
+  };
+
   list.contains = function(target) {
+
+    if (this.getNode(target)) {
+      return true;
+    }
+    return false;
+
+  };
+
+  list.getNode = function(target) {
     var recurseThroughList = function (nextItem) {
       if (nextItem.value === target) {
-        return true;
+        return nextItem;
       } else if (nextItem.next !== null) {
-        recurseThroughList(nextItem);
+        return recurseThroughList(nextItem.next);
       }
       return false;
     };
+    return recurseThroughList(this.head);
+  };
 
-    if (this.head.value === target) {
-      return true;
-    } else if (this.head.next !== null) {
-      return recurseThroughList(this.head.next);
-    } else {
-      return false;
+  list.addTo = function(targetValue, newValue) {
+    var nodeToAppendTo = this.getNode(targetValue);
+    if (nodeToAppendTo) {
+      var nextNode = nodeToAppendTo.next;
+      nodeToAppendTo.next = new Node(newValue);
+      nodeToAppendTo.next.next = nextNode;
     }
     
   };
+
+  
 
   return list;
 };
